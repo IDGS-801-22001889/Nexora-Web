@@ -1,0 +1,15 @@
+<main class="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 gap-4">
+  <h1 class="text-3xl font-bold text-gray-800">Nexora Web</h1>
+
+  @if (authService.usuarioActual(); as usuario) {
+    <p class="text-gray-600">Hola, {{ usuario.nombre }} ({{ usuario.rol }})</p>
+    <button
+      (click)="authService.logout()"
+      class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+    >
+      Cerrar sesión
+    </button>
+  } @else {
+    <p class="text-gray-600">No has iniciado sesión</p>
+  }
+</main>

@@ -15,5 +15,9 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [authGuard, adminGuard],
     children: []
+  },
+  {
+  path: 'faq',
+  loadComponent: () => import('./features/public/faq/faq').then(m => m.FaqComponent)
   }
 ];

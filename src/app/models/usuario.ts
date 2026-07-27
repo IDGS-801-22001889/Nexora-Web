@@ -4,4 +4,6 @@ export interface Usuario {
   email: string;
   rol: 'Administrador' | 'Cliente';
   activo: boolean;
+  fechaRegistro?: string;
+  correoEnviado?: boolean;
 }

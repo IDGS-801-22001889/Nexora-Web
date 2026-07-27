@@ -1,0 +1,57 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-md mx-auto space-y-6">
+    <h1 class="text-2xl font-bold text-gray-800">Mi perfil</h1>
+
+    <!-- Datos personales -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Datos personales</h2>
+
+      @if (mensajeDatos()) {
+        <p class="text-green-600 text-sm mb-3">{{ mensajeDatos() }}</p>
+      }
+      @if (errorDatos()) {
+        <p class="text-red-600 text-sm mb-3">{{ errorDatos() }}</p>
+      }
+
+      <form [formGroup]="formDatos" (ngSubmit)="guardarDatos()" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+          <input formControlName="nombre" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Correo</label>
+          <input type="email" formControlName="email" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+        </div>
+        <button type="submit" class="w-full bg-[#2FA084] text-white rounded py-2 font-medium hover:bg-[#1F6F5F] transition">
+          Guardar cambios
+        </button>
+      </form>
+    </div>
+
+    <!-- Cambiar contraseña -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Cambiar contraseña</h2>
+
+      @if (mensajePassword()) {
+        <p class="text-green-600 text-sm mb-3">{{ mensajePassword() }}</p>
+      }
+      @if (errorPassword()) {
+        <p class="text-red-600 text-sm mb-3">{{ errorPassword() }}</p>
+      }
+
+      <form [formGroup]="formPassword" (ngSubmit)="cambiarPassword()" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña actual</label>
+          <input type="password" formControlName="passwordActual" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nueva contraseña</label>
+          <input type="password" formControlName="passwordNueva" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+        </div>
+        <button type="submit" class="w-full bg-[#2FA084] text-white rounded py-2 font-medium hover:bg-[#1F6F5F] transition">
+          Cambiar contraseña
+        </button>
+      </form>
+    </div>
+  </div>
+</main>

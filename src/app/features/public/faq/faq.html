@@ -1,21 +1,29 @@
-<main class="min-h-screen bg-gray-100 px-4 py-10">
-  <div class="max-w-2xl mx-auto">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Preguntas Frecuentes</h1>
+<main class="min-h-screen bg-gray-50">
+
+  <div class="max-w-2xl mx-auto px-6 py-10">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Preguntas Frecuentes</h1>
+
+    <input
+      type="text"
+      [(ngModel)]="busqueda"
+      placeholder="Buscar una pregunta..."
+      class="w-full border border-gray-300 rounded px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+    />
 
     @if (cargando()) {
       <p class="text-center text-gray-500">Cargando...</p>
-    } @else if (faqs().length === 0) {
-      <p class="text-center text-gray-500">Aún no hay preguntas frecuentes.</p>
+    } @else if (faqsFiltradas().length === 0) {
+      <p class="text-center text-gray-500">No se encontraron preguntas.</p>
     } @else {
-      <div class="space-y-3">
-        @for (faq of faqs(); track faq.idFaq) {
+      <div class="space-y-2">
+        @for (faq of faqsFiltradas(); track faq.idFaq) {
           <div class="bg-white rounded-lg shadow overflow-hidden">
             <button
               (click)="toggle(faq.idFaq)"
               class="w-full text-left px-4 py-3 font-medium text-gray-800 flex justify-between items-center"
             >
               {{ faq.pregunta }}
-              <span>{{ abiertoId() === faq.idFaq ? '−' : '+' }}</span>
+              <span class="text-[#2FA084] text-xl">{{ abiertoId() === faq.idFaq ? '−' : '+' }}</span>
             </button>
             @if (abiertoId() === faq.idFaq) {
               <p class="px-4 pb-4 text-gray-600">{{ faq.respuesta }}</p>
@@ -24,5 +32,17 @@
         }
       </div>
     }
+
+    <div class="mt-8 text-center">
+      <p class="text-gray-600 mb-3">¿No encontraste tu respuesta?</p>
+
+      <a
+
+        href="/contacto"
+        class="inline-block bg-[#2FA084] text-white px-6 py-2 rounded font-medium hover:bg-[#1F6F5F] transition">
+        Contáctanos
+      </a>
+    </div>
   </div>
+
 </main>

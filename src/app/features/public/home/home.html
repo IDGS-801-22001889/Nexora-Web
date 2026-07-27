@@ -1,15 +1,85 @@
-<main class="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 gap-4">
-  <h1 class="text-3xl font-bold text-gray-800">Nexora Web</h1>
+<main class="bg-white">
+  <!-- Hero -->
+  <section class="bg-[#1F6F5F] text-white px-6 py-16">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold mb-3">Previene la fatiga al volante.</h1>
+        <p class="text-white/80 mb-6">SOMNIX detecta la somnolencia antes de que ocurra el accidente.</p>
+        <div class="flex flex-wrap gap-3">
+          <a routerLink="/cotizar" class="bg-[#2FA084] px-6 py-3 rounded font-medium hover:bg-[#6FCF97] transition">
+            Solicita tu cotización
+          </a>
+          <a routerLink="/producto" class="border border-white/40 px-6 py-3 rounded font-medium hover:bg-white/10 transition">
+            Conoce SOMNIX
+          </a>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg h-56 flex items-center justify-center text-gray-400">
+        [ Imagen / video del dispositivo ]
+      </div>
+    </div>
+  </section>
 
-  @if (authService.usuarioActual(); as usuario) {
-    <p class="text-gray-600">Hola, {{ usuario.nombre }} ({{ usuario.rol }})</p>
-    <button
-      (click)="authService.logout()"
-      class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-    >
-      Cerrar sesión
-    </button>
-  } @else {
-    <p class="text-gray-600">No has iniciado sesión</p>
-  }
+  <!-- Quiénes somos -->
+  <section class="px-6 py-14">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div class="bg-gray-50 rounded-lg p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-3">¿Quiénes somos?</h2>
+        <p class="text-gray-600">
+          NEXORA BUSINESS es la empresa encargada de comercializar SOMNIX, un sistema
+          integral de prevención de fatiga laboral dirigido al sector del transporte de
+          carga y pasajeros. Combinamos un dispositivo IoT (gorra inteligente), una
+          aplicación móvil y un panel de monitoreo, respaldados por una operación
+          comercial formal que va desde proveedores hasta atención postventa.
+        </p>
+      </div>
+      <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center text-gray-400">
+        [ Imagen / video corporativo ]
+      </div>
+    </div>
+  </section>
+
+  <!-- Beneficios -->
+  <section class="px-6 py-14 bg-gray-50">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Beneficios clave</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-[#1F6F5F] mb-2">Alertas en tiempo real</h3>
+          <p class="text-gray-600 text-sm">Notificaciones inmediatas ante señales de fatiga del conductor.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-[#1F6F5F] mb-2">Reduce accidentes</h3>
+          <p class="text-gray-600 text-sm">Disminuye siniestros viales causados por somnolencia al volante.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-[#1F6F5F] mb-2">Dashboard de flotilla</h3>
+          <p class="text-gray-600 text-sm">Monitorea a todos tus conductores desde un panel centralizado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios preview -->
+  <section class="px-6 py-14">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Lo que dicen nuestros clientes</h2>
+      <div class="grid md:grid-cols-3 gap-6 mb-6">
+        <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
+          ⭐⭐⭐⭐⭐ "Excelente soporte..."
+        </div>
+        <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
+          ⭐⭐⭐⭐⭐ "Excelente soporte..."
+        </div>
+        <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
+          ⭐⭐⭐⭐⭐ "Excelente soporte..."
+        </div>
+      </div>
+      <div class="text-center">
+        <a routerLink="/testimonios" class="text-[#2FA084] font-medium hover:underline">
+          Ver todos los testimonios →
+        </a>
+      </div>
+    </div>
+  </section>
 </main>

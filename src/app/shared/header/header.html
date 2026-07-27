@@ -1,0 +1,39 @@
+<header class="bg-[#1F6F5F] text-white px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+  <a routerLink="/" class="font-bold text-lg">NEXORA</a>
+
+  <nav class="hidden md:flex gap-6 text-sm">
+    <!-- Links públicos: siempre visibles, para cualquiera -->
+    <a routerLink="/" routerLinkActive="font-semibold" [routerLinkActiveOptions]="{exact: true}" class="hover:text-[#6FCF97]">Inicio</a>
+    <a routerLink="/producto" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Producto</a>
+    <a routerLink="/testimonios" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Testimonios</a>
+    <a routerLink="/faq" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">FAQ</a>
+    <a routerLink="/cotizar" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Cotizar</a>
+    <a routerLink="/contacto" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Contacto</a>
+
+    @if (authService.usuarioActual(); as usuario) {
+      @if (usuario.rol === 'Administrador') {
+        <!-- Solo Administrador -->
+        <a routerLink="/admin" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Admin</a>
+      } @else {
+        <!-- Solo Cliente -->
+        <a routerLink="/cliente/perfil" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Mi cuenta</a>
+      }
+    } @else {
+      <!-- Nadie ha iniciado sesión -->
+      <a routerLink="/auth/login" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Ingresar</a>
+    }
+  </nav>
+
+  <div class="flex items-center gap-3">
+    @if (authService.usuarioActual(); as usuario) {
+      <span class="text-sm hidden md:inline">Hola, {{ usuario.nombre }}</span>
+      <button (click)="authService.logout()" class="text-sm bg-white/10 px-3 py-1.5 rounded hover:bg-white/20 transition">
+        Salir
+      </button>
+    } @else {
+      <a routerLink="/cotizar" class="bg-[#2FA084] px-4 py-2 rounded font-medium text-sm hover:bg-[#6FCF97] transition">
+        Cotizar ahora
+      </a>
+    }
+  </div>
+</header>

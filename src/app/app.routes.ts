@@ -12,12 +12,46 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/login/login').then(m => m.Login)
   },
   {
-    path: 'admin',
-    canActivate: [authGuard, adminGuard],
-    children: []
+    path: 'faq',
+    loadComponent: () => import('./features/public/faq/faq').then(m => m.FaqComponent)
   },
   {
-  path: 'faq',
-  loadComponent: () => import('./features/public/faq/faq').then(m => m.FaqComponent)
+    path: 'contacto',
+    loadComponent: () => import('./features/public/contacto/contacto').then(m => m.Contacto)
+  },
+  {
+    path: 'solicitar-acceso',
+    loadComponent: () => import('./features/public/solicitar-acceso/solicitar-acceso').then(m => m.SolicitarAcceso)
+  },
+  {
+    path: 'cliente/perfil',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/cliente/perfil/perfil').then(m => m.Perfil)
+  },
+  {
+    path: 'admin',
+    canActivate: [authGuard, adminGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/admin/dashboard/dashboard').then(m => m.Dashboard)
+      },
+      {
+        path: 'solicitudes',
+        loadComponent: () => import('./features/admin/solicitudes/solicitudes').then(m => m.SolicitudesComponent)
+      },
+      {
+        path: 'usuarios',
+        loadComponent: () => import('./features/admin/usuarios/usuarios').then(m => m.Usuarios)
+      },
+      {
+        path: 'usuarios/nuevo',
+        loadComponent: () => import('./features/admin/usuario-form/usuario-form').then(m => m.UsuarioForm)
+      },
+      {
+        path: 'usuarios/:id/editar',
+        loadComponent: () => import('./features/admin/usuario-form/usuario-form').then(m => m.UsuarioForm)
+      }
+    ]
   }
 ];

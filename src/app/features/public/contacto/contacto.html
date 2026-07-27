@@ -1,0 +1,87 @@
+<main class="min-h-screen bg-gray-50">
+
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <h1 class="text-2xl font-bold text-gray-800 mb-8">Contáctanos</h1>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Formulario -->
+      <div class="bg-white rounded-lg shadow p-6">
+        @if (enviado()) {
+          <div class="bg-green-50 border border-green-300 text-green-700 rounded p-4 mb-4">
+            ¡Gracias! Tu mensaje fue enviado, te contactaremos pronto.
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+            <input
+              type="text"
+              formControlName="nombre"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+            <input
+              type="email"
+              formControlName="email"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+            <input
+              type="tel"
+              formControlName="telefono"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Asunto</label>
+            <input
+              type="text"
+              formControlName="asunto"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+            <textarea
+              formControlName="mensaje"
+              rows="4"
+              class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-[#2FA084] text-white rounded py-2 font-medium hover:bg-[#1F6F5F] transition"
+          >
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+
+      <!-- Datos de contacto + mapa -->
+      <div class="space-y-4">
+        <div class="bg-[#1F6F5F] text-white rounded-lg p-6 space-y-3">
+          <h2 class="font-semibold text-lg mb-2">Datos de contacto</h2>
+          <p class="text-sm">📍 Av. Tecnológico 123, León, Gto.</p>
+          <p class="text-sm">✉️ contacto&#64;nexorabusiness.com</p>
+          <p class="text-sm">📞 (477) 123 4567</p>
+          <p class="text-sm">🕐 Lun–Vie 9:00–18:00 hrs</p>
+        </div>
+
+        <div class="bg-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-500">
+          [ Mapa de ubicación ]
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

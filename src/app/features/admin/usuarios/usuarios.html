@@ -1,0 +1,126 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Usuarios</h1>
+      @if (errorEnvio()) {
+        <p class="text-red-600 text-sm mb-4">{{ errorEnvio() }}</p>
+      }
+      <a
+        routerLink="/admin/usuarios/nuevo"
+        class="bg-[#2FA084] text-white px-4 py-2 rounded font-medium hover:bg-[#1F6F5F] transition"
+      >
+        + Nuevo usuario
+      </a>
+    </div>
+
+    @if (cargando()) {
+      <p class="text-gray-500">Cargando...</p>
+    } @else {
+      <!-- Administradores -->
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Administradores</h2>
+      <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-100 text-gray-600 text-left">
+            <tr>
+              <th class="px-4 py-3">Nombre</th>
+              <th class="px-4 py-3">Correo</th>
+              <th class="px-4 py-3">Estado</th>
+              <th class="px-4 py-3">Correo enviado</th>
+              <th class="px-4 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (administradores().length === 0) {
+              <tr><td colspan="4" class="px-4 py-3 text-gray-500">Sin administradores.</td></tr>
+            }
+            @for (u of administradores(); track u.idUsuario) {
+              <tr class="border-t border-gray-100">
+                <td class="px-4 py-3">{{ u.nombre }}</td>
+                <td class="px-4 py-3">{{ u.email }}</td>
+                <td class="px-4 py-3">
+                  <span [class]="u.activo ? 'text-green-600' : 'text-red-500'">
+                    {{ u.activo ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <button
+                    (click)="enviarCredenciales(u)"
+                    [disabled]="u.correoEnviado || enviandoId() === u.idUsuario"
+                    class="px-3 py-1 rounded text-xs font-medium transition"
+                    [class.bg-green-100]="u.correoEnviado"
+                    [class.text-green-700]="u.correoEnviado"
+                    [class.bg-[#2FA084]]="!u.correoEnviado"
+                    [class.text-white]="!u.correoEnviado"
+                    [class.hover:bg-[#1F6F5F]]="!u.correoEnviado"
+                    [class.opacity-50]="enviandoId() === u.idUsuario"
+                  >
+                    {{ u.correoEnviado ? '✓ Enviado' : (enviandoId() === u.idUsuario ? 'Enviando...' : 'Enviar credenciales') }}
+                  </button>
+                </td>
+                <td class="px-4 py-3 space-x-2">
+                  <a [routerLink]="['/admin/usuarios', u.idUsuario, 'editar']" class="text-[#2FA084] hover:underline">Editar</a>
+                  @if (u.activo) {
+                    <button (click)="desactivar(u)" class="text-red-500 hover:underline">Desactivar</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Clientes -->
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Clientes</h2>
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-100 text-gray-600 text-left">
+            <tr>
+              <th class="px-4 py-3">Nombre</th>
+              <th class="px-4 py-3">Correo</th>
+              <th class="px-4 py-3">Estado</th>
+              <th class="px-4 py-3">Correo enviado</th>
+              <th class="px-4 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (clientes().length === 0) {
+              <tr><td colspan="4" class="px-4 py-3 text-gray-500">Sin clientes.</td></tr>
+            }
+            @for (u of clientes(); track u.idUsuario) {
+              <tr class="border-t border-gray-100">
+                <td class="px-4 py-3">{{ u.nombre }}</td>
+                <td class="px-4 py-3">{{ u.email }}</td>
+                <td class="px-4 py-3">
+                  <span [class]="u.activo ? 'text-green-600' : 'text-red-500'">
+                    {{ u.activo ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <button
+                    (click)="enviarCredenciales(u)"
+                    [disabled]="u.correoEnviado || enviandoId() === u.idUsuario"
+                    class="px-3 py-1 rounded text-xs font-medium transition"
+                    [class.bg-green-100]="u.correoEnviado"
+                    [class.text-green-700]="u.correoEnviado"
+                    [class.bg-[#2FA084]]="!u.correoEnviado"
+                    [class.text-white]="!u.correoEnviado"
+                    [class.hover:bg-[#1F6F5F]]="!u.correoEnviado"
+                    [class.opacity-50]="enviandoId() === u.idUsuario"
+                  >
+                    {{ u.correoEnviado ? '✓ Enviado' : (enviandoId() === u.idUsuario ? 'Enviando...' : 'Enviar credenciales') }}
+                  </button>
+                </td>
+                <td class="px-4 py-3 space-x-2">
+                  <a [routerLink]="['/admin/usuarios', u.idUsuario, 'editar']" class="text-[#2FA084] hover:underline">Editar</a>
+                  @if (u.activo) {
+                    <button (click)="desactivar(u)" class="text-red-500 hover:underline">Desactivar</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</main>

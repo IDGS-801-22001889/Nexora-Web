@@ -60,4 +60,21 @@ export class AuthService {
     const data = localStorage.getItem('usuario');
     return data ? JSON.parse(data) : null;
   }
+
+  getPerfil() {
+  return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/me`);
+}
+
+actualizarPerfil(nombre: string, email: string) {
+  return this.http.put(`${environment.apiUrl}/usuarios/me`, { nombre, email });
+}
+
+cambiarPassword(passwordActual: string, passwordNueva: string) {
+  return this.http.put(`${environment.apiUrl}/usuarios/me/password`, { passwordActual, passwordNueva });
+}
+
+actualizarUsuarioLocal(usuario: Usuario) {
+  localStorage.setItem('usuario', JSON.stringify(usuario));
+  this.usuarioActual.set(usuario);
+}
 }

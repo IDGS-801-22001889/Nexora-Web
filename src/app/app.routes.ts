@@ -92,6 +92,14 @@ export const routes: Routes = [
     {
     path: 'materia-prima/:id/editar',
     loadComponent: () => import('./features/admin/materia-prima-form/materia-prima-form').then(m => m.MateriaPrimaForm)
+    },
+    {
+  path: 'compras',
+  loadComponent: () => import('./features/admin/compras/compras').then(m => m.Compras)
+    },
+    {
+    path: 'compras/nueva',
+    loadComponent: () => import('./features/admin/compra-form/compra-form').then(m => m.CompraForm)
     }
     ]
   }

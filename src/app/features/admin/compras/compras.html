@@ -1,0 +1,52 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Compras a proveedores</h1>
+      <a
+        routerLink="/admin/compras/nueva"
+        class="bg-[#2FA084] text-white px-4 py-2 rounded font-medium hover:bg-[#1F6F5F] transition"
+      >
+        + Nueva compra
+      </a>
+    </div>
+
+    @if (cargando()) {
+      <p class="text-gray-500">Cargando...</p>
+    } @else if (compras().length === 0) {
+      <p class="text-gray-500">No hay compras registradas.</p>
+    } @else {
+      <div class="space-y-4">
+        @for (c of compras(); track c.idCompra) {
+          <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <p class="font-semibold text-gray-800">{{ c.proveedor?.razonSocial }}</p>
+                <p class="text-xs text-gray-400">{{ c.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+              </div>
+              <p class="font-semibold text-[#1F6F5F]">${{ c.total | number:'1.2-2' }}</p>
+            </div>
+
+            <table class="w-full text-sm mt-3">
+              <thead class="text-gray-500 text-left border-b">
+                <tr>
+                  <th class="py-1">Materia prima</th>
+                  <th class="py-1">Cantidad</th>
+                  <th class="py-1">Costo unitario</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (d of c.detalles; track d.idMateriaPrima) {
+                  <tr class="border-b border-gray-50">
+                    <td class="py-1">{{ d.materiaPrima?.nombre }}</td>
+                    <td class="py-1">{{ d.cantidad }} {{ d.materiaPrima?.unidadMedida }}</td>
+                    <td class="py-1">${{ d.costoUnitario | number:'1.2-2' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</main>

@@ -68,7 +68,31 @@ export const routes: Routes = [
       {
       path: 'comentarios',
       loadComponent: () => import('./features/admin/comentarios/comentarios').then(m => m.ComentariosAdmin)
-      }
+      },
+      {
+  path: 'proveedores',
+  loadComponent: () => import('./features/admin/proveedores/proveedores').then(m => m.Proveedores)
+    },
+    {
+    path: 'proveedores/nuevo',
+    loadComponent: () => import('./features/admin/proveedor-form/proveedor-form').then(m => m.ProveedorForm)
+    },
+    {
+    path: 'proveedores/:id/editar',
+    loadComponent: () => import('./features/admin/proveedor-form/proveedor-form').then(m => m.ProveedorForm)
+    },
+    {
+  path: 'materia-prima',
+  loadComponent: () => import('./features/admin/materia-prima/materia-prima').then(m => m.MateriaPrimaComponent)
+    },
+    {
+    path: 'materia-prima/nueva',
+    loadComponent: () => import('./features/admin/materia-prima-form/materia-prima-form').then(m => m.MateriaPrimaForm)
+    },
+    {
+    path: 'materia-prima/:id/editar',
+    loadComponent: () => import('./features/admin/materia-prima-form/materia-prima-form').then(m => m.MateriaPrimaForm)
+    }
     ]
   }
 ];

@@ -1,0 +1,97 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-2">Comentarios y Valoraciones de Clientes</h1>
+
+    @if (!cargando()) {
+      <p class="text-gray-600 mb-6">
+        Calificación promedio:
+        <span class="text-[#2FA084] font-semibold">
+          {{ promedio() }} / 5
+        </span>
+        ({{ total() }} opiniones)
+      </p>
+    }
+
+    <!-- Filtro por calificación -->
+    <div class="flex flex-wrap gap-2 mb-6">
+  <button (click)="aplicarFiltro(null)" [class]="claseFiltro(null)">
+    Todas
+  </button>
+  @for (n of [5, 4, 3, 2, 1]; track n) {
+    <button (click)="aplicarFiltro(n)" [class]="claseFiltro(n)">
+      {{ n }}★
+    </button>
+  }
+</div>
+
+    <!-- Lista de comentarios -->
+    @if (cargando()) {
+      <p class="text-gray-500">Cargando...</p>
+    } @else if (comentariosFiltrados().length === 0) {
+      <p class="text-gray-500 mb-8">No hay comentarios con ese filtro.</p>
+    } @else {
+      <div class="grid md:grid-cols-3 gap-4 mb-10">
+        @for (c of comentariosFiltrados(); track c.idComentario) {
+          <div class="bg-white rounded-lg shadow p-4">
+            <p class="font-semibold text-gray-800 text-sm">{{ c.nombreCliente }}</p>
+            <p class="text-yellow-500 text-sm mb-2">
+              @for (n of [1,2,3,4,5]; track n) {
+                {{ n <= c.calificacion ? '★' : '☆' }}
+              }
+            </p>
+            <p class="text-gray-600 text-sm">{{ c.texto }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Formulario para dejar opinión: solo clientes logueados -->
+    @if (esCliente()) {
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="font-semibold text-gray-800 mb-4">Deja tu opinión</h2>
+
+        @if (mensajeExito()) {
+          <p class="text-green-600 text-sm mb-3">{{ mensajeExito() }}</p>
+        }
+        @if (error()) {
+          <p class="text-red-600 text-sm mb-3">{{ error() }}</p>
+        }
+
+        <div class="flex gap-1 mb-4 text-2xl">
+          @for (n of [1,2,3,4,5]; track n) {
+            <span
+              (click)="seleccionarCalificacion(n)"
+              (mouseenter)="calificacionHover.set(n)"
+              (mouseleave)="calificacionHover.set(0)"
+              class="cursor-pointer text-yellow-500"
+            >
+              {{ n <= (calificacionHover() || calificacionSeleccionada()) ? '★' : '☆' }}
+            </span>
+          }
+        </div>
+
+        <textarea
+          [value]="textoNuevo()"
+          (input)="textoNuevo.set($any($event.target).value)"
+          rows="3"
+          placeholder="Escribe tu comentario aquí..."
+          class="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#2FA084]"
+        ></textarea>
+
+        <button
+          (click)="enviarComentario()"
+          [disabled]="enviando()"
+          class="bg-[#2FA084] text-white px-6 py-2 rounded font-medium hover:bg-[#1F6F5F] transition disabled:opacity-50"
+        >
+          {{ enviando() ? 'Enviando...' : 'Enviar opinión' }}
+        </button>
+
+        <p class="text-xs text-gray-400 mt-2">* Los comentarios se publican tras moderación del administrador.</p>
+      </div>
+    } @else if (!authService.usuarioActual()) {
+      <p class="text-center text-gray-500">
+        <a routerLink="/auth/login" class="text-[#2FA084] hover:underline">Inicia sesión</a> como cliente para dejar tu opinión.
+      </p>
+    }
+  </div>
+</main>

@@ -1,0 +1,80 @@
+<main class="bg-white">
+  @if (cargando()) {
+    <div class="min-h-screen flex items-center justify-center text-gray-500">Cargando...</div>
+  } @else if (!producto()) {
+    <div class="min-h-screen flex items-center justify-center text-gray-500">
+      El producto aún no está configurado.
+    </div>
+  } @else {
+    <div class="max-w-5xl mx-auto px-6 py-10">
+      <h1 class="text-2xl font-bold text-gray-800">{{ producto()!.nombre }}: Sistema Anti-Fatiga para Conductores</h1>
+      <p class="text-gray-500 mb-8">Gorra inteligente + App móvil + Panel de monitoreo en tiempo real</p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Galería -->
+        <div class="bg-gray-100 rounded-lg h-72 flex items-center justify-center text-gray-400">
+          [ Galería de imágenes / video demo ]
+        </div>
+
+        <!-- Ficha técnica + beneficios -->
+        <div class="space-y-4">
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h2 class="font-semibold text-gray-800 mb-2">Ficha técnica</h2>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>Microcontrolador: XIAO ESP32-S3</li>
+              <li>Sensor: MPU6050 (ángulo de cabeceo)</li>
+              <li>Alertas: buzzer + vibrador, menor a 1s</li>
+              <li>Conectividad: Wi-Fi (MQTT) / BLE</li>
+            </ul>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h2 class="font-semibold text-gray-800 mb-2">Beneficios para tu empresa</h2>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>Reduce siniestros viales</li>
+              <li>Monitoreo en tiempo real vía app/panel</li>
+              <li>Predicción de aptitud con IA</li>
+            </ul>
+          </div>
+
+          <p class="text-lg font-semibold text-[#1F6F5F]">
+            Desde ${{ producto()!.precio | number:'1.2-2' }} MXN por unidad
+          </p>
+        </div>
+      </div>
+
+      <!-- Cómo funciona -->
+      <div class="mt-12">
+        <h2 class="text-xl font-bold text-gray-800 mb-6">¿Cómo funciona?</h2>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="bg-gray-50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">1️⃣</div>
+            <h3 class="font-semibold text-gray-700">Detecta</h3>
+            <p class="text-xs text-gray-500 mt-1">El sensor identifica señales de fatiga en el conductor.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">2️⃣</div>
+            <h3 class="font-semibold text-gray-700">Alerta</h3>
+            <p class="text-xs text-gray-500 mt-1">Buzzer y vibración avisan de inmediato al conductor.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">3️⃣</div>
+            <h3 class="font-semibold text-gray-700">Notifica</h3>
+            <p class="text-xs text-gray-500 mt-1">Se envía la alerta al panel de monitoreo de la flotilla.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4 text-center">
+            <div class="text-2xl mb-2">4️⃣</div>
+            <h3 class="font-semibold text-gray-700">Analiza</h3>
+            <p class="text-xs text-gray-500 mt-1">Los datos alimentan el módulo de predicción de aptitud.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-10">
+        <a routerLink="/cotizar" class="bg-[#2FA084] text-white px-8 py-3 rounded font-medium hover:bg-[#1F6F5F] transition inline-block">
+          Solicitar cotización de {{ producto()!.nombre }}
+        </a>
+      </div>
+    </div>
+  }
+</main>

@@ -9,6 +9,7 @@
     <a routerLink="/faq" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">FAQ</a>
     <a routerLink="/cotizar" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Cotizar</a>
     <a routerLink="/contacto" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Contacto</a>
+    <a routerLink="/documentacion" routerLinkActive="font-semibold" class="hover:text-[#6FCF97]">Documentación</a>
 
     @if (authService.usuarioActual(); as usuario) {
       @if (usuario.rol === 'Administrador') {

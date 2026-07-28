@@ -29,6 +29,19 @@ export const routes: Routes = [
     loadComponent: () => import('./features/cliente/perfil/perfil').then(m => m.Perfil)
   },
   {
+    path: 'documentacion',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/cliente/documentacion/documentacion').then(m => m.DocumentacionComponent)
+  },
+  {
+  path: 'producto',
+  loadComponent: () => import('./features/public/producto/producto').then(m => m.ProductoComponent)
+  },
+  {
+  path: 'testimonios',
+  loadComponent: () => import('./features/public/testimonios/testimonios').then(m => m.Testimonios)
+  },
+  {
     path: 'admin',
     canActivate: [authGuard, adminGuard],
     children: [
@@ -51,6 +64,10 @@ export const routes: Routes = [
       {
         path: 'usuarios/:id/editar',
         loadComponent: () => import('./features/admin/usuario-form/usuario-form').then(m => m.UsuarioForm)
+      },
+      {
+      path: 'comentarios',
+      loadComponent: () => import('./features/admin/comentarios/comentarios').then(m => m.ComentariosAdmin)
       }
     ]
   }

@@ -1,0 +1,134 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-2">Solicitud de Cotización</h1>
+    <p class="text-gray-500 mb-8">Completa el formulario y recibe el costo estimado al instante.</p>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Formulario -->
+      <div class="bg-white rounded-lg shadow p-6">
+        @if (error()) {
+          <p class="text-red-600 text-sm mb-4">{{ error() }}</p>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de la empresa</label>
+            <input formControlName="nombreEmpresa" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del contacto</label>
+            <input formControlName="nombreContacto" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+            <input type="email" formControlName="email" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+            <input formControlName="telefono" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Número de unidades/vehículos</label>
+            <input type="number" min="1" formControlName="numeroUnidades" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de transporte</label>
+            <select formControlName="tipoTransporte" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]">
+              <option value="Carga">Carga</option>
+              <option value="Pasajeros">Pasajeros</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad / Región</label>
+            <input formControlName="ciudadRegion" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Complementos adicionales</label>
+            <div class="flex gap-4 text-sm">
+              <label class="flex items-center gap-2">
+                <input type="checkbox" formControlName="instalacionIncluida" class="w-4 h-4" />
+                Instalación incluida
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" formControlName="capacitacion" class="w-4 h-4" />
+                Capacitación
+              </label>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="enviando()"
+            class="w-full bg-[#2FA084] text-white rounded py-2 font-medium hover:bg-[#1F6F5F] transition disabled:opacity-50"
+          >
+            {{ enviando() ? 'Calculando...' : 'Calcular Cotización' }}
+          </button>
+        </form>
+      </div>
+
+      <!-- Resumen -->
+      <div>
+        @if (!resultado()) {
+          <div class="bg-gray-100 rounded-lg p-6 h-full flex items-center justify-center text-gray-400 text-sm text-center">
+            Completa el formulario para ver el resumen de tu cotización aquí.
+          </div>
+        } @else {
+          <div class="bg-white rounded-lg shadow p-6 border border-[#2FA084]">
+            <h2 class="font-semibold text-gray-800 mb-4">Resumen de tu cotización</h2>
+
+            <div class="space-y-2 text-sm text-gray-600">
+              <div class="flex justify-between">
+                <span>Gorra inteligente SOMNIX</span>
+                <span>${{ resultado()!.costoGorras | number:'1.2-2' }} MXN</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Licencia app + panel (anual)</span>
+                <span>${{ resultado()!.licenciaAnual | number:'1.2-2' }} MXN</span>
+              </div>
+              @if (resultado()!.instalacion > 0) {
+                <div class="flex justify-between">
+                  <span>Instalación</span>
+                  <span>${{ resultado()!.instalacion | number:'1.2-2' }} MXN</span>
+                </div>
+              }
+              @if (resultado()!.capacitacion > 0) {
+                <div class="flex justify-between">
+                  <span>Capacitación</span>
+                  <span>${{ resultado()!.capacitacion | number:'1.2-2' }} MXN</span>
+                </div>
+              }
+              <hr class="my-2" />
+              <div class="flex justify-between font-medium">
+                <span>Subtotal</span>
+                <span>${{ resultado()!.subtotal | number:'1.2-2' }} MXN</span>
+              </div>
+              <div class="flex justify-between">
+                <span>IVA (16%)</span>
+                <span>${{ resultado()!.iva | number:'1.2-2' }} MXN</span>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="flex justify-between text-lg font-bold text-[#1F6F5F]">
+              <span>Total estimado</span>
+              <span>${{ resultado()!.total | number:'1.2-2' }} MXN</span>
+            </div>
+
+            <p class="text-xs text-gray-400 mt-3">
+              * Cálculo basado en costeo Promedio Ponderado. Un asesor confirmará tu cotización por correo.
+            </p>
+
+            <button
+              (click)="nuevaCotizacion()"
+              class="w-full mt-4 border border-[#2FA084] text-[#2FA084] rounded py-2 font-medium hover:bg-[#2FA084] hover:text-white transition"
+            >
+              Nueva cotización
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</main>

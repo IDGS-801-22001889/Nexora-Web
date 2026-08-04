@@ -108,6 +108,14 @@ export const routes: Routes = [
     {
     path: 'receta',
     loadComponent: () => import('./features/admin/receta/receta').then(m => m.RecetaComponent)
+    },
+    {
+    path: 'inventario',
+    loadComponent: () => import('./features/admin/inventario/inventario').then(m => m.Inventario)
+    },
+    {
+    path: 'produccion',
+    loadComponent: () => import('./features/admin/produccion/produccion').then(m => m.Produccion)
     }
     ]
   }

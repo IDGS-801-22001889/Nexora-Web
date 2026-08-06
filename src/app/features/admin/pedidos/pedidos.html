@@ -1,0 +1,56 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Pedidos de clientes</h1>
+
+    @if (error()) {
+      <p class="text-red-600 text-sm mb-4">{{ error() }}</p>
+    }
+
+    @if (cargando()) {
+      <p class="text-gray-500">Cargando...</p>
+    } @else if (pedidos().length === 0) {
+      <p class="text-gray-500">No hay pedidos registrados.</p>
+    } @else {
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-100 text-gray-600 text-left">
+            <tr>
+              <th class="px-4 py-3">Cliente</th>
+              <th class="px-4 py-3">Cantidad</th>
+              <th class="px-4 py-3">Total</th>
+              <th class="px-4 py-3">Estado</th>
+              <th class="px-4 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of pedidos(); track p.idPedido) {
+              <tr class="border-t border-gray-100">
+                <td class="px-4 py-3">
+                  {{ p.nombreCliente }}<br />
+                  <span class="text-xs text-gray-400">{{ p.emailCliente }}</span>
+                </td>
+                <td class="px-4 py-3">{{ p.cantidad }}</td>
+                <td class="px-4 py-3">${{ p.total | number:'1.2-2' }}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs font-medium" [class]="claseEstado(p.estado)">
+                    {{ p.estado }}
+                  </span>
+                </td>
+                <td class="px-4 py-3 space-x-2">
+                  @if (p.estado === 'En espera') {
+                    <button (click)="aceptar(p)" [disabled]="procesandoId() === p.idPedido" class="text-green-600 hover:underline text-xs">
+                      Aceptar
+                    </button>
+                    <button (click)="rechazar(p)" [disabled]="procesandoId() === p.idPedido" class="text-red-500 hover:underline text-xs">
+                      Rechazar
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</main>

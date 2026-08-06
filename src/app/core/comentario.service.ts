@@ -26,4 +26,12 @@ export class ComentarioService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+
+  getDestacados() {
+    return this.http.get<Comentario[]>(`${this.apiUrl}/destacados`);
+  }
+
+  eliminar(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

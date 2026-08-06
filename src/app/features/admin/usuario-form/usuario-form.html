@@ -20,12 +20,15 @@
       </div>
 
       @if (!esEdicion()) {
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-          <input type="password" formControlName="password" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
-          <p class="text-xs text-gray-500 mt-1">Mínimo 6 caracteres. Compártela con el cliente por correo.</p>
-        </div>
-      }
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+    <input type="password" formControlName="password" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2FA084]" />
+    <p class="text-xs text-gray-500 mt-1">Mínimo 8 caracteres, con mayúscula, minúscula, número y carácter especial.</p>
+    @if (form.get('password')?.hasError('passwordDebil') && form.get('password')?.touched) {
+      <p class="text-red-500 text-xs mt-1">La contraseña no cumple con los requisitos de seguridad.</p>
+    }
+  </div>
+}
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Rol</label>

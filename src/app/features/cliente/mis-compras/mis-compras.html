@@ -1,0 +1,38 @@
+<main class="min-h-screen bg-gray-50 px-6 py-10">
+  <div class="max-w-2xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Mis compras</h1>
+
+    @if (cargando()) {
+      <p class="text-gray-500">Cargando...</p>
+    } @else if (pedidos().length === 0) {
+      <p class="text-gray-500">Aún no tienes compras registradas.</p>
+    } @else {
+      <div class="space-y-3">
+        @for (p of pedidos(); track p.idPedido) {
+          <div class="bg-white rounded-lg shadow overflow-hidden">
+            <button (click)="verDetalle(p)" class="w-full text-left px-4 py-3 flex justify-between items-center">
+              <div>
+                <p class="font-medium text-gray-800">{{ p.fecha | date:'dd/MM/yyyy' }} — {{ p.cantidad }} unidades</p>
+                <p class="text-sm text-gray-500">${{ p.total | number:'1.2-2' }} MXN</p>
+              </div>
+              <span class="px-2 py-1 rounded text-xs font-medium" [class]="claseEstado(p.estado)">
+                {{ p.estado }}
+              </span>
+            </button>
+
+            @if (seleccionado() === p) {
+              <div class="px-4 pb-4 text-sm text-gray-600 border-t border-gray-100 pt-3">
+                <p><strong>Método de pago:</strong> {{ p.metodoPago }}</p>
+                <p><strong>Cantidad:</strong> {{ p.cantidad }} unidades</p>
+                <p><strong>Total:</strong> ${{ p.total | number:'1.2-2' }} MXN</p>
+                @if (p.mensajeAdmin) {
+                  <p class="mt-2 italic">"{{ p.mensajeAdmin }}"</p>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</main>

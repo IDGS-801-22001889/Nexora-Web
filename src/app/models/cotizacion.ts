@@ -25,3 +25,12 @@ export interface CotizacionResponse {
   idCotizacion: number;
   desglose: DesgloseCotizacion;
 }
+
+export interface CotizacionGuardada {
+  idCotizacion: number;
+  nombreEmpresa: string;
+  numeroUnidades: number;
+  total: number;
+  fecha: string;
+  estado: 'Nueva' | 'Convertida a pedido';
+}

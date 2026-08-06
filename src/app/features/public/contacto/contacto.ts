@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ContactoService } from '../../../core/contacto.service';
 
 @Component({
   selector: 'app-contacto',
@@ -12,8 +13,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class Contacto {
   form: FormGroup;
   enviado = signal(false);
+  error = signal<string | null>(null);
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private contactoService: ContactoService) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -29,10 +31,17 @@ export class Contacto {
       return;
     }
 
-    // Por ahora solo confirmamos en pantalla; si más adelante quieren
-    // enviarlo a un endpoint real, aquí se agregaría la llamada HTTP.
-    console.log('Mensaje de contacto:', this.form.value);
-    this.enviado.set(true);
-    this.form.reset();
+    this.error.set(null);
+    const { nombre, email, telefono, asunto, mensaje } = this.form.value;
+
+    this.contactoService.enviar(nombre, email, telefono, asunto, mensaje).subscribe({
+      next: () => {
+        this.enviado.set(true);
+        this.form.reset();
+      },
+      error: (err) => {
+        this.error.set(err.error ?? 'No se pudo enviar tu mensaje, intenta de nuevo.');
+      }
+    });
   }
 }

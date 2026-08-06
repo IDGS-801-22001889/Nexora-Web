@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CotizacionService } from '../../../core/cotizacion.service';
 import { DesgloseCotizacion } from '../../../models/cotizacion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cotizar',
@@ -17,7 +18,7 @@ export class Cotizar {
   error = signal<string | null>(null);
   resultado = signal<DesgloseCotizacion | null>(null);
 
-  constructor(private fb: FormBuilder, private cotizacionService: CotizacionService) {
+  constructor(private fb: FormBuilder, private cotizacionService: CotizacionService, private router: Router) {
     this.form = this.fb.group({
       nombreEmpresa: ['', Validators.required],
       nombreContacto: ['', Validators.required],
@@ -60,5 +61,9 @@ export class Cotizar {
       instalacionIncluida: false,
       capacitacion: false
     });
+  }
+
+  irAComprar() {
+  this.router.navigate(['/cliente/comprar']);
   }
 }

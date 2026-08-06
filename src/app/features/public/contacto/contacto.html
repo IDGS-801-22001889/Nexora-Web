@@ -11,6 +11,9 @@
             ¡Gracias! Tu mensaje fue enviado, te contactaremos pronto.
           </div>
         }
+        @if (error()) {
+         <p class="text-red-600 text-sm mb-4">{{ error() }}</p>
+        }
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
           <div>

@@ -4,8 +4,13 @@
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h1 class="text-3xl md:text-4xl font-bold mb-3">Previene la fatiga al volante.</h1>
-        <p class="text-white/80 mb-6">SOMNIX detecta la somnolencia antes de que ocurra el accidente.</p>
+        <p class="text-white/80 mb-6">SOMNIX es un sistema anti-fatiga inteligente diseñado para proteger a los conductores de transporte de carga y pasajeros. Su carcasa está fabricada con fibra de bambú tejida, un material 100% renovable, ligero y resistente que reduce el impacto ambiental sin sacrificar durabilidad. Combina sensores de movimiento, alertas en tiempo real y conectividad Wi-Fi para detectar señales de somnolencia antes de que se conviertan en un accidente — cuidando tanto a tus operadores como al planeta.</p>
         <div class="flex flex-wrap gap-3">
+          @if (esCliente()) {
+            <a routerLink="/cliente/comprar" class="bg-[#2FA084] px-6 py-3 rounded font-medium hover:bg-[#6FCF97] transition">
+              Comprar SOMNIX
+            </a>
+          }
           <a routerLink="/cotizar" class="bg-[#2FA084] px-6 py-3 rounded font-medium hover:bg-[#6FCF97] transition">
             Solicita tu cotización
           </a>
@@ -14,13 +19,37 @@
           </a>
         </div>
       </div>
-      <div class="bg-gray-100 rounded-lg h-48 flex items-center justify-center text-gray-400">
-        <img
-          src="/img/gorraPrueba.jpg"
-          alt="Gorra inteligente SOMNIX"
-          class="w-full h-full object-contain"
-        >
-      </div>
+      <div class="bg-gray-100 rounded-lg aspect-square overflow-hidden relative">
+
+  <img
+    [src]="imagenesCarrusel[indiceImagen()]"
+    alt="Gorra inteligente SOMNIX"
+    class="w-full h-full object-contain"
+  >
+
+  <!-- Anterior -->
+  <button
+    type="button"
+    (click)="imagenAnterior()"
+    class="absolute left-3 top-1/2 -translate-y-1/2
+           bg-black/40 text-white rounded-full w-10 h-10
+           flex items-center justify-center"
+  >
+    ‹
+  </button>
+
+  <!-- Siguiente -->
+  <button
+    type="button"
+    (click)="imagenSiguiente()"
+    class="absolute right-3 top-1/2 -translate-y-1/2
+           bg-black/40 text-white rounded-full w-10 h-10
+           flex items-center justify-center"
+  >
+    ›
+  </button>
+
+</div>
     </div>
   </section>
 
@@ -50,7 +79,7 @@
   <section class="px-6 py-14 bg-gray-50">
     <div class="max-w-5xl mx-auto">
       <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Beneficios clave</h2>
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-4 gap-6">
         <div class="bg-white rounded-lg shadow p-6 text-center">
           <h3 class="font-semibold text-[#1F6F5F] mb-2">Alertas en tiempo real</h3>
           <p class="text-gray-600 text-sm">Notificaciones inmediatas ante señales de fatiga del conductor.</p>
@@ -63,30 +92,41 @@
           <h3 class="font-semibold text-[#1F6F5F] mb-2">Dashboard de flotilla</h3>
           <p class="text-gray-600 text-sm">Monitorea a todos tus conductores desde un panel centralizado.</p>
         </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-[#1F6F5F] mb-2">Diseño sustentable</h3>
+          <p class="text-gray-600 text-sm">Fabricada con bambú tejido, un material renovable de bajo impacto ambiental.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonios preview -->
-  <section class="px-6 py-14">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Lo que dicen nuestros clientes</h2>
+<section class="px-6 py-14">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Lo que dicen nuestros clientes</h2>
+
+    @if (destacados().length === 0) {
+      <p class="text-center text-gray-400 text-sm mb-6">Aún no hay opiniones de clientes.</p>
+    } @else {
       <div class="grid md:grid-cols-3 gap-6 mb-6">
-        <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
-          ⭐⭐⭐⭐⭐ "Excelente soporte..."
-        </div>
-        <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
-          ⭐⭐⭐⭐⭐ "Excelente soporte..."
-        </div>
-        <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
-          ⭐⭐⭐⭐⭐ "Excelente soporte..."
-        </div>
+        @for (c of destacados(); track c.idComentario) {
+          <div class="border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
+            <p class="text-yellow-500 mb-1">
+              @for (n of [1,2,3,4,5]; track n) {
+                {{ n <= c.calificacion ? '★' : '☆' }}
+              }
+            </p>
+            <p class="mb-2">"{{ c.texto }}"</p>
+            <p class="text-xs text-gray-400">— {{ c.nombreCliente }}</p>
+          </div>
+        }
       </div>
-      <div class="text-center">
-        <a routerLink="/testimonios" class="text-[#2FA084] font-medium hover:underline">
-          Ver todos los testimonios →
-        </a>
-      </div>
+    }
+
+    <div class="text-center">
+      <a routerLink="/testimonios" class="text-[#2FA084] font-medium hover:underline">
+        Ver todos los testimonios →
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 </main>

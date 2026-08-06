@@ -1,6 +1,7 @@
 <main class="min-h-screen bg-gray-50 px-6 py-10">
   <div class="max-w-4xl mx-auto">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Moderación de comentarios</h1>
+    <h1 class="text-2xl font-bold text-gray-800 mb-2">Comentarios de clientes</h1>
+    <p class="text-gray-500 text-sm mb-6">Los comentarios se publican automáticamente. Elimina aquí cualquiera que sea inapropiado.</p>
 
     @if (cargando()) {
       <p class="text-gray-500">Cargando...</p>
@@ -14,7 +15,7 @@
               <th class="px-4 py-3">Cliente</th>
               <th class="px-4 py-3">Comentario</th>
               <th class="px-4 py-3">Calificación</th>
-              <th class="px-4 py-3">Estado</th>
+              <th class="px-4 py-3">Fecha</th>
               <th class="px-4 py-3">Acciones</th>
             </tr>
           </thead>
@@ -31,38 +32,15 @@
                     {{ n <= c.calificacion ? '★' : '☆' }}
                   }
                 </td>
+                <td class="px-4 py-3 text-gray-500">{{ c.fecha | date:'dd/MM/yyyy' }}</td>
                 <td class="px-4 py-3">
-                  <span
-                    class="px-2 py-1 rounded text-xs font-medium"
-                    [class.bg-yellow-100]="c.estado === 'Pendiente'"
-                    [class.text-yellow-700]="c.estado === 'Pendiente'"
-                    [class.bg-green-100]="c.estado === 'Revisado'"
-                    [class.text-green-700]="c.estado === 'Revisado'"
-                    [class.bg-red-100]="c.estado === 'Rechazado'"
-                    [class.text-red-700]="c.estado === 'Rechazado'"
+                  <button
+                    (click)="eliminar(c)"
+                    [disabled]="procesandoId() === c.idComentario"
+                    class="text-red-500 hover:underline text-xs"
                   >
-                    {{ c.estado }}
-                  </span>
-                </td>
-                <td class="px-4 py-3 space-x-2">
-                  @if (c.estado !== 'Revisado') {
-                    <button
-                      (click)="aprobar(c)"
-                      [disabled]="procesandoId() === c.idComentario"
-                      class="text-green-600 hover:underline text-xs"
-                    >
-                      Aprobar
-                    </button>
-                  }
-                  @if (c.estado !== 'Rechazado') {
-                    <button
-                      (click)="rechazar(c)"
-                      [disabled]="procesandoId() === c.idComentario"
-                      class="text-red-500 hover:underline text-xs"
-                    >
-                      Rechazar
-                    </button>
-                  }
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             }

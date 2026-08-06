@@ -32,19 +32,11 @@ export class ComentariosAdmin implements OnInit {
     });
   }
 
-  aprobar(c: Comentario) {
-    this.procesandoId.set(c.idComentario);
-    this.comentarioService.cambiarEstado(c.idComentario, 'Revisado').subscribe({
-      next: () => {
-        this.procesandoId.set(null);
-        this.cargar();
-      }
-    });
-  }
+  eliminar(c: Comentario) {
+    if (!confirm(`¿Eliminar el comentario de ${c.nombreCliente}? Esta acción no se puede revertir.`)) return;
 
-  rechazar(c: Comentario) {
     this.procesandoId.set(c.idComentario);
-    this.comentarioService.cambiarEstado(c.idComentario, 'Rechazado').subscribe({
+    this.comentarioService.eliminar(c.idComentario).subscribe({
       next: () => {
         this.procesandoId.set(null);
         this.cargar();

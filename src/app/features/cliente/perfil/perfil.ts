@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/auth.service';
+import { passwordFuerteValidator } from '../../../core/password-validator';
 
 @Component({
   selector: 'app-perfil',
@@ -27,7 +28,7 @@ export class Perfil implements OnInit {
 
     this.formPassword = this.fb.group({
       passwordActual: ['', Validators.required],
-      passwordNueva: ['', [Validators.required, Validators.minLength(6)]]
+      passwordNueva: ['', [Validators.required, passwordFuerteValidator()]]
     });
   }
 

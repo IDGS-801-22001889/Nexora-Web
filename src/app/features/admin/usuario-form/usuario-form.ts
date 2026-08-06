@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from '../../../core/usuarios.service';
 import { SolicitudesService } from '../../../core/solicitudes.service';
+import { passwordFuerteValidator } from '../../../core/password-validator';
 
 @Component({
   selector: 'app-usuario-form',
@@ -30,7 +31,7 @@ export class UsuarioForm implements OnInit {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: [''], // solo requerido al crear, se valida manualmente
+      password: ['', [passwordFuerteValidator()]],
       rol: ['Cliente', Validators.required],
       activo: [true]
     });
@@ -58,7 +59,8 @@ export class UsuarioForm implements OnInit {
       });
     } else {
       // Modo creación — password obligatorio
-      this.form.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
+      this.form.get('password')?.setValidators([Validators.required, passwordFuerteValidator()]);
+      this.form.get('password')?.updateValueAndValidity();
 
       // Si viene desde una solicitud, precargamos los datos
       const nombre = queryParams.get('nombre');

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { CotizacionRequest, CotizacionResponse } from '../models/cotizacion';
+import { CotizacionRequest, CotizacionResponse, CotizacionGuardada } from '../models/cotizacion';
 
 @Injectable({ providedIn: 'root' })
 export class CotizacionService {
@@ -11,5 +11,9 @@ export class CotizacionService {
 
   crear(data: CotizacionRequest) {
     return this.http.post<CotizacionResponse>(this.apiUrl, data);
+  }
+
+  getMisCotizaciones() {
+    return this.http.get<CotizacionGuardada[]>(`${this.apiUrl}/mis-cotizaciones`);
   }
 }

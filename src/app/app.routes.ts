@@ -46,6 +46,16 @@ export const routes: Routes = [
   loadComponent: () => import('./features/public/cotizar/cotizar').then(m => m.Cotizar)
   },
   {
+  path: 'cliente/comprar',
+  canActivate: [authGuard],
+  loadComponent: () => import('./features/cliente/comprar/comprar').then(m => m.Comprar)
+  },
+  {
+  path: 'cliente/mis-compras',
+  canActivate: [authGuard],
+  loadComponent: () => import('./features/cliente/mis-compras/mis-compras').then(m => m.MisCompras)
+  },
+  {
     path: 'admin',
     canActivate: [authGuard, adminGuard],
     children: [
@@ -116,6 +126,10 @@ export const routes: Routes = [
     {
     path: 'produccion',
     loadComponent: () => import('./features/admin/produccion/produccion').then(m => m.Produccion)
+    },
+    {
+    path: 'pedidos',
+    loadComponent: () => import('./features/admin/pedidos/pedidos').then(m => m.PedidosAdmin)
     }
     ]
   }

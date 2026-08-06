@@ -24,7 +24,7 @@ export class Cotizar {
       nombreContacto: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', Validators.required],
-      numeroUnidades: [1, [Validators.required, Validators.min(1)]],
+      numeroUnidades: [1, [Validators.required, Validators.min(1), Validators.max(30)]],
       tipoTransporte: ['Carga', Validators.required],
       ciudadRegion: ['', Validators.required],
       instalacionIncluida: [false],
